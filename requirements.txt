@@ -1,0 +1,27 @@
+# Data & ML
+pandas
+numpy
+scikit-learn
+xgboost
+
+# API
+fastapi
+uvicorn
+
+# Database
+sqlalchemy
+psycopg2-binary
+
+# Experiment tracking
+mlflow
+
+# Dashboard / Visualization
+streamlit
+matplotlib
+seaborn
+
+# Testing
+pytest
+
+# Optional utils
+python-dotenv
