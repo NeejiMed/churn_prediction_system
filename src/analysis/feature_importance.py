@@ -18,12 +18,12 @@ feat_importance = pd.DataFrame({'Feature': features, 'Importance': feature_impor
 feat_importance = feat_importance.sort_values(by='Importance', ascending=False)
 
 # Save feature importance to a CSV file
-feat_importance.to_csv("reports/feature_importance.csv", index=False)
+feat_importance.to_csv("reports/features_importance.csv", index=False)
 
 plt.figure(figsize=(10,6))
 plt.barh(feat_importance['Feature'], feat_importance['Importance'])
 plt.gca().invert_yaxis()
-plt.title("Feature Importance (Random Forest)")
+plt.title("Features Importance (Random Forest)")
 plt.tight_layout()
 plt.savefig("reports/feature_importance.png")
 plt.show()
