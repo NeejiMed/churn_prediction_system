@@ -2,9 +2,11 @@ import pandas as pd
 from pathlib import Path
 
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score
 
 from sklearn.ensemble import RandomForestClassifier
+
+from xgboost import XGBClassifier
 
 # Define the paths
 DATA_PATH = Path("data/processed")
@@ -37,13 +39,29 @@ def train_random_forest(X_train, y_train):
     
     return model
 
+# Train an XGBoost model for feature importance analysis
+def train_xgboost(X_train, y_train):
+    """Train an XGBoost classifier on the training data."""
+    print('Training the XGBoost model...')
+    model = XGBClassifier(
+        n_estimators=300,
+        learning_rate=0.05,
+        max_depth=5,
+        scale_pos_weight=3,  # Adjust this based on the imbalance ratio
+        random_state=42,
+        eval_metric='logloss'
+    )
+    model.fit(X_train, y_train.values.ravel())
+
+    return model
+
 def make_predictions(model, X_test):
     """Make predictions using the trained model on the test data."""
     print('Making predictions on the test dataset...')
     predictions = model.predict(X_test)
     return predictions
 
-"""def evaluate_model(model, X_test, y_test):
+def evaluate_model(model, X_test, y_test):
     print('Evaluating the model...')
     predictions = make_predictions(model, X_test)
     
@@ -54,18 +72,11 @@ def make_predictions(model, X_test):
     print(confusion_matrix(y_test, predictions))
     
     print("Accuracy Score:")
-    print(accuracy_score(y_test, predictions))"""
-
-def evaluate_model(y_test, y_pred):
-    """Evaluate the model's performance using classification report, confusion matrix, and accuracy score."""
-    print("Classification Report:")
-    print(classification_report(y_test, y_pred))
-
-    print("Confusion Matrix:")
-    print(confusion_matrix(y_test, y_pred))
-
-    print("Accuracy Score:")
-    print(accuracy_score(y_test, y_pred))
+    print(accuracy_score(y_test, predictions))
+ 
+    y_prob = model.predict_proba(X_test)[:, 1]  # Get probabilities for the positive class
+    print("ROC AUC Score:")
+    print(roc_auc_score(y_test, y_prob))
 
 def main():
     # Load the training and testing data
@@ -75,12 +86,15 @@ def main():
     #model = train_logistic_regression(X_train, y_train)
 
     # Train the random forest model
-    model = train_random_forest(X_train, y_train)
+    #model = train_random_forest(X_train, y_train)
+
+    # Train the XGBoost model
+    model = train_xgboost(X_train, y_train)
 
     y_pred = make_predictions(model, X_test)
     
     # Evaluate the model's performance
-    evaluate_model(y_test, y_pred)
+    evaluate_model(model, X_test, y_test)
 
 if __name__ == "__main__":
     main()
