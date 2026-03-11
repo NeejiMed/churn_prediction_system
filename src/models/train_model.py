@@ -98,7 +98,10 @@ def main():
     # Evaluate the model's performance
     evaluate_model(model, X_test, y_test)
     # Save the trained model to a file
-    joblib.dump(model, MODEL_PATH)
+    joblib.dump({
+        'model': model,
+        'features': X_train.columns.tolist()
+    }, MODEL_PATH)
     print(f'Model saved to {MODEL_PATH}')
     
 if __name__ == "__main__":
