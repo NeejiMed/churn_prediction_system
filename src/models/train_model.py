@@ -1,5 +1,6 @@
 import pandas as pd
 from pathlib import Path
+import joblib
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score
@@ -10,6 +11,7 @@ from xgboost import XGBClassifier
 
 # Define the paths
 DATA_PATH = Path("data/processed")
+MODEL_PATH = Path("models/churn_model.pkl")
 
 def load_data():
     """Load the training and testing data from the specified paths."""
@@ -95,6 +97,9 @@ def main():
     
     # Evaluate the model's performance
     evaluate_model(model, X_test, y_test)
-
+    # Save the trained model to a file
+    joblib.dump(model, MODEL_PATH)
+    print(f'Model saved to {MODEL_PATH}')
+    
 if __name__ == "__main__":
     main()
