@@ -14,3 +14,6 @@ data/processed/y_test.csv
 
 # Model files
 models/*.pkl
+
+# Debug scripts
+src/debug
