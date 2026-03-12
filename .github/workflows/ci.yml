@@ -33,6 +33,7 @@ jobs:
 
         - name: Build Docker containers
           run: |
+            cd docker
             docker compose build
 
         - name: Test Docker containers
