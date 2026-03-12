@@ -1,14 +1,25 @@
-version: '3.8'
-
 services:
+
   api:
     build:
       context: ..
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/Dockerfile.api
     ports:
       - "8000:8000"
     volumes:
       - ../src:/app/src
-      - ../data:/app/data
+      - ../models:/app/models
     environment:
       - PYTHONPATH=/app/src
+
+  streamlit:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.streamlit
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../app:/app/app
+      - ../models:/app/models
+    depends_on:
+      - api
