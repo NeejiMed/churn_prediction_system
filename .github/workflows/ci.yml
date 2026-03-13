@@ -31,6 +31,12 @@ jobs:
           run: |
             ls -R
 
+        - name: Ensure models directory exists for Docker build
+          run: |
+            mkdir -p models
+            touch models/.gitkeep
+            ls -la models
+
         - name: Build Docker containers
           run: |
             cd docker
