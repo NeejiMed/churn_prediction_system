@@ -13,7 +13,7 @@ data/processed/y_train.csv
 data/processed/y_test.csv
 
 # Model files
-models/*.pkl
+#models/*.pkl
 
 # Debug scripts
 src/debug
