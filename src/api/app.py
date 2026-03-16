@@ -8,6 +8,9 @@ artifact = joblib.load("models/churn_model.pkl")
 model = artifact["model"]
 features = artifact["features"]
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 @app.post("/predict")
 def predict(data: dict):
