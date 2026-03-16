@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 import joblib
 import pandas as pd
+import logging
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 app = FastAPI()
 
 artifact = joblib.load("models/churn_model.pkl")
@@ -14,6 +17,7 @@ def health():
 
 @app.post("/predict")
 def predict(data: dict):
+    logger.info(f"Received data for prediction: {data}")
 
     input_df = pd.DataFrame(columns=features)
     input_df.loc[0] = 0
