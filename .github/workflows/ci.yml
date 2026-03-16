@@ -5,6 +5,7 @@ on:
     branches: 
         - main
         - dev
+        - debug-ci
   pull_request:
     branches:
       - dev
@@ -30,6 +31,14 @@ jobs:
         - name: Verify project structure
           run: |
             ls -R
+
+        - name: Prepare models directory
+          run: |
+            mkdir -p models
+
+        - name: Train model
+          run: |
+            python src/models/train_model.py
 
         - name: Build Docker containers
           run: |
