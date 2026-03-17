@@ -6,9 +6,6 @@ services:
       dockerfile: docker/Dockerfile.api
     ports:
       - "8000:8000"
-    volumes:
-      - ../src:/app/src
-      - ../models:/app/models
     environment:
       - PYTHONPATH=/app/src
 
@@ -18,8 +15,5 @@ services:
       dockerfile: docker/Dockerfile.streamlit
     ports:
       - "8501:8501"
-    volumes:
-      - ../app:/app/app
-      - ../models:/app/models
     depends_on:
       - api
